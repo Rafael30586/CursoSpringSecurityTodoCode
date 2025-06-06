@@ -5,6 +5,7 @@ import com.todocodeacademy.spring.security2.model.UserSec;
 import com.todocodeacademy.spring.security2.service.IRoleService;
 import com.todocodeacademy.spring.security2.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,10 +35,13 @@ public class UserController {
         return user.map(ResponseEntity::ok).orElseGet(()->ResponseEntity.notFound().build());
     }
 
+
     @PostMapping
     public ResponseEntity createUser(@RequestBody UserSec userSec){
         Set<Role> roleList = new HashSet<>();
         Role readRole;
+
+        //userSec.setPassword(service.encriptPassword(userSec.getPassword()));
 
         for(Role role : userSec.getRoleList()){
             readRole = roleService.findById(role.getId()).orElse(null);
@@ -55,4 +59,8 @@ public class UserController {
         }
         return null;
     }
+
+    //rafael contraseña: metroidprime
+    //pruebaBCrypt contraseña: 1234
+    //link password: zelda
 }

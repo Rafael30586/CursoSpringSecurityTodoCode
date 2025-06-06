@@ -1,9 +1,9 @@
-package com.todocodeacademy.spring.security2.service;
+package com.todocodeacademy.springSecurity.service;
 
-import com.todocodeacademy.spring.security2.model.UserSec;
-import com.todocodeacademy.spring.security2.repository.IUserRepository;
+
+import com.todocodeacademy.springSecurity.model.UserSec;
+import com.todocodeacademy.springSecurity.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -11,40 +11,40 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService implements IUserService{
+public class UserService implements IUserService {
 
     @Autowired
-    private IUserRepository repository;
+    private IUserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public List findAll() {
-        return repository.findAll();
+    public List<UserSec> findAll() {
+        return userRepository.findAll();
     }
 
     @Override
     public Optional<UserSec> findById(Long id) {
-        return repository.findById(id);
+        return userRepository.findById(id);
     }
 
     @Override
     public UserSec save(UserSec userSec) {
-        return repository.save(userSec);
+        return userRepository.save(userSec);
     }
 
     @Override
     public void deleteById(Long id) {
-        repository.deleteById(id);
+        userRepository.deleteById(id);
     }
 
     @Override
     public void update(UserSec userSec) {
-        repository.save(userSec);
+        save(userSec);
     }
-/*
+
     @Override
     public String encriptPassword(String password) {
         return passwordEncoder.encode(password);
-    }*/
+    }
 }

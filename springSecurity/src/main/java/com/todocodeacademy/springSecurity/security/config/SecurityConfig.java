@@ -1,4 +1,4 @@
-package com.todocodeacademy.spring.security2.security.config;
+package com.todocodeacademy.springSecurity.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,22 +29,22 @@ import java.util.List;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{
-
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws  Exception{
         return httpSecurity
                 .csrf(csrf->csrf.disable())
                 .httpBasic(Customizer.withDefaults())
-                .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                /*.authorizeHttpRequests(http->{
+                .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))/*
+                .authorizeHttpRequests(http->{
                     http.requestMatchers(HttpMethod.GET, "/holanoseg").permitAll();
                     http.requestMatchers(HttpMethod.GET,"/holaseg").hasAuthority("READ");
                     http.anyRequest().denyAll();
+
                 })*/
                 .build();
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception{
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
@@ -52,43 +52,45 @@ public class SecurityConfig {
     public AuthenticationProvider authenticationProvider(UserDetailsService userDetailsService){
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(passwordEncoder());
-        //provider.setUserDetailsService(userDetailsService());
         provider.setUserDetailsService(userDetailsService);
+
         return provider;
     }
-
-    @Bean
-    public PasswordEncoder passwordEncoder(){//NoOpPasswordEncoder permite que no haya...
-        return NoOpPasswordEncoder.getInstance();//...encriptación de contraseña. ...
-    }//...Las contraseñas se almacenan y comparan en texto plano
 /*
     @Bean
     public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
+        return NoOpPasswordEncoder.getInstance();
     }*/
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
 /*
     @Bean
-    public UserDetailsService userDetailsService(){
+    public UserDetailsService userDetailsService () {
         List userDetailsList = new ArrayList<>();
 
         userDetailsList.add(User.withUsername("todocode")
-                .password("1234")
+                .password("1234") // esto si no está codificado, sino, tiene que seguir el algoritmo de codificación
                 .roles("ADMIN")
-                .authorities("CREATE","READ","UPDATE","DELETE")
+                .authorities("CREATE", "READ", "UPDATE", "DELETE")
                 .build());
 
         userDetailsList.add(User.withUsername("seguidor")
-                .password("1234")
+                .password("1234") // esto si no está codificado, sino, tiene que seguir el algoritmo de codificación
                 .roles("USER")
                 .authorities("READ")
                 .build());
 
         userDetailsList.add(User.withUsername("actualizador")
-                .password("1234")
+                .password("1234") // esto si no está codificado, sino, tiene que seguir el algoritmo de codificación
                 .roles("USER")
                 .authorities("UPDATE")
                 .build());
 
         return new InMemoryUserDetailsManager(userDetailsList);
     }*/
+
 }
