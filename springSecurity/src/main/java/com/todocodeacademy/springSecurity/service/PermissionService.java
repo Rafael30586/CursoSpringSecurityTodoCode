@@ -39,5 +39,11 @@ public class PermissionService implements IPermissionService {
     public Permission update(Permission permission) {
         return permissionRepository.save(permission);
     }
+
+    @Override
+    public Optional<Permission> findByPermissionName(String permissionName) {
+        return permissionRepository.findByPermissionName(permissionName);
+    }
+
 }
 

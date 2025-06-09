@@ -7,6 +7,7 @@ import com.todocodeacademy.springSecurity.service.IRoleService;
 import com.todocodeacademy.springSecurity.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -16,6 +17,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/api/users")
+@PreAuthorize("denyAll()")
 public class UserController {
 
     @Autowired
@@ -24,18 +26,22 @@ public class UserController {
     @Autowired
     private IRoleService roleService;
 
+    //@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     @GetMapping
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public ResponseEntity<List<UserSec>> getAllUsers() {
         List users = userService.findAll();
         return ResponseEntity.ok(users);
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public ResponseEntity getUserById(@PathVariable Long id) {
         Optional<UserSec> user = userService.findById(id);
         return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @PreAuthorize("hasAuthority('CREATE')")
     @PostMapping
     public ResponseEntity createUser(@RequestBody UserSec userSec) {
 

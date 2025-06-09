@@ -18,6 +18,18 @@ public class Permission {
     @Column(unique = true, nullable = false)
     private String permissionName;
 
+    public Permission() {
+    }
+
+    public Permission(Long id) {
+        this.id = id;
+    }
+
+    public Permission(Long id, String permissionName) {
+        this.id = id;
+        this.permissionName = permissionName;
+    }
+
     public Long getId() {
         return id;
     }

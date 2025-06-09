@@ -13,4 +13,5 @@ public interface IRoleService {
     Role save(Role role);
     void deleteById(Long id);
     Role update(Role role);
+    Role patch(Long roleId, Long permissionId, char accion);
 }

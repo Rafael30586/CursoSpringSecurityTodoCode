@@ -1,19 +1,24 @@
 package com.todocodeacademy.springSecurity.service;
 
 
+import com.todocodeacademy.springSecurity.model.Permission;
 import com.todocodeacademy.springSecurity.model.Role;
+import com.todocodeacademy.springSecurity.repository.IPermissionRepository;
 import com.todocodeacademy.springSecurity.repository.IRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class RoleService implements IRoleService {
 
     @Autowired
     private IRoleRepository roleRepository;
+    @Autowired
+    private IPermissionRepository permissionRepository;
 
     @Override
     public List<Role> findAll() {
@@ -39,5 +44,32 @@ public class RoleService implements IRoleService {
     public Role update(Role role) {
         return roleRepository.save(role);
     }
+
+    @Override
+    public Role patch(Long roleId, Long permissionId, char accion) {
+        if(accion=='a' || accion=='q'){
+            Role roleToEdit = roleRepository.findById(roleId).get();
+            Set<Permission> permissionList = roleToEdit.getPermissionList();
+
+            if(accion=='a'){
+                Permission permission = permissionRepository.findById(permissionId).get();
+                permissionList.add(permission);
+            }else{
+                for(Permission p : permissionList){
+                    if(p.getId()==roleId) permissionList.remove(p);
+                }
+            }
+            roleToEdit.setPermissionList(permissionList);
+            roleRepository.save(roleToEdit);
+
+            return roleRepository.findById(roleId).get();
+        }
+
+
+
+        return null;
+    }
+
+
 }
 
