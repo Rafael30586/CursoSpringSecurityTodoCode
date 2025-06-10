@@ -29,8 +29,8 @@ public class Main {
 
                 //payload
                 .subject("pruebajwt")
-                .expiration(expiration)
-                .issuedAt(issuedAt)
+                .expiration(expiration) //fecha de expiración
+                .issuedAt(issuedAt) //fecha de emisión
                 .claims(extraClaims)
 
                 //firma
