@@ -40,7 +40,16 @@ public class PermissionController {
         return ResponseEntity.ok(newPermission);
     }
 
-    public ResponseEntity deletePermission(){
-        return null;
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void deletePermission(@PathVariable Long id){
+        permissionService.deleteById(id);
+    }
+
+    @PutMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity editPermission(@RequestBody Permission permission){
+        Permission editedPermission = permissionService.update(permission);
+        return ResponseEntity.ok(editedPermission);
     }
 }

@@ -66,6 +66,32 @@ public class UserController {
         }
         return null;
     }
+
+    @PutMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity editUser(@RequestBody UserSec userSec){
+        Set<Role> roleList = new HashSet<>();
+        Role readRole;
+
+        userSec.setPassword(userService.encriptPassword(userSec.getPassword()));
+
+        // Recuperar la Permission/s por su ID
+        for (Role role : userSec.getRoleList()){
+            readRole = roleService.findById(role.getId()).orElse(null);
+            if (readRole != null) {
+                //si encuentro, guardo en la lista
+                roleList.add(readRole);
+            }
+        }
+
+        if (!roleList.isEmpty()) {
+            userSec.setRoleList(roleList);
+
+            UserSec newUser = userService.save(userSec);
+            return ResponseEntity.ok(newUser);
+        }
+        return null;
+    }
     //rafael, contraseña: 1234 ADMIN
     //pancho, contraseña: 1234 STUDENT
 }
