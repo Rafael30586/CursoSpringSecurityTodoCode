@@ -1,5 +1,7 @@
 package com.todocodeacademy.plataforma_educativa.service;
 
+import com.todocodeacademy.plataforma_educativa.dto.StudentDTO;
+import com.todocodeacademy.plataforma_educativa.model.Student;
 import com.todocodeacademy.plataforma_educativa.model.UserSec;
 import com.todocodeacademy.plataforma_educativa.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,7 @@ public class UserService implements IUserService{
     public Optional<UserSec> findById(Long id) {
         return userRepository.findById(id);
     }
+
 
     @Override
     public UserSec save(UserSec userSec) {

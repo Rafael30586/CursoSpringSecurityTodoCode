@@ -11,5 +11,5 @@ public interface ICourseService {
     public Optional<Course> findById(Long id);
     public Course save(Course course);
     public void deleteById(Long id);
-    public Professor update(Course course);
+    public Course update(Course course);
 }

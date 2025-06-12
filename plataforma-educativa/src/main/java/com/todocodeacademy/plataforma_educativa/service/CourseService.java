@@ -17,26 +17,27 @@ public class CourseService implements ICourseService{
     
     @Override
     public List<Course> findAll() {
-        return List.of();
+        return repository.findAll();
     }
 
     @Override
     public Optional<Course> findById(Long id) {
-        return Optional.empty();
+        return repository.findById(id);
     }
 
     @Override
     public Course save(Course course) {
-        return null;
+        return repository.save(course);
     }
 
     @Override
     public void deleteById(Long id) {
+        repository.deleteById(id);
 
     }
 
     @Override
-    public Professor update(Course course) {
-        return null;
+    public Course update(Course course) {
+        return repository.save(course);
     }
 }

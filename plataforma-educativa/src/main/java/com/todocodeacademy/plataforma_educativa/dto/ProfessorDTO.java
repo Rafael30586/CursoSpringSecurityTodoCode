@@ -1,32 +1,22 @@
-package com.todocodeacademy.plataforma_educativa.model;
+package com.todocodeacademy.plataforma_educativa.dto;
 
-import jakarta.persistence.*;
+import com.todocodeacademy.plataforma_educativa.model.Course;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
-@Entity
-@Table(name="students")
-public class Student {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ProfessorDTO {
     private Long id;
     private String firstName;
     private String lastName;
-    @Column(unique = true)
-    private String username;
-    private String password;
-    @ManyToMany
-    private List<Course> courseList = new ArrayList<>();
+    private List<Course> courseList;
 
     public Long getId() {
         return id;
@@ -50,22 +40,6 @@ public class Student {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public List<Course> getCourseList() {

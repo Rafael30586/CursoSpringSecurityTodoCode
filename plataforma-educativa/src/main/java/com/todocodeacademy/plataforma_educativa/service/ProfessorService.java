@@ -1,5 +1,6 @@
 package com.todocodeacademy.plataforma_educativa.service;
 
+import com.todocodeacademy.plataforma_educativa.dto.ProfessorDTO;
 import com.todocodeacademy.plataforma_educativa.model.Professor;
 import com.todocodeacademy.plataforma_educativa.model.Role;
 import com.todocodeacademy.plataforma_educativa.model.UserSec;
@@ -8,10 +9,7 @@ import com.todocodeacademy.plataforma_educativa.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class ProfessorService implements IProfessorService{
@@ -22,13 +20,45 @@ public class ProfessorService implements IProfessorService{
     private IUserRepository userRepository;
 
     @Override
-    public List<Professor> findAll() {
+    public List<Professor> findAll(){
         return repository.findAll();
     }
 
+
     @Override
-    public Optional<Professor> findById(Long id) {
+    public List<ProfessorDTO> findAll2() {
+        List<Professor> professorList = repository.findAll();
+        List<ProfessorDTO> professorDTOList = new ArrayList<>();
+        ProfessorDTO dto;
+
+        for(Professor p : professorList){
+            dto = new ProfessorDTO();
+            dto.setId(p.getId());
+            dto.setFirstName(p.getFirstName());
+            dto.setLastName(p.getLastName());
+            dto.setCourseList(p.getCourseList());
+            professorDTOList.add(dto);
+        }
+        return professorDTOList;
+    }
+
+    @Override
+    public Optional<Professor> findById(Long id){
         return repository.findById(id);
+    }
+
+    @Override
+    public ProfessorDTO findById2(Long id) {
+        Optional<Professor> professor = repository.findById(id);
+        ProfessorDTO dto = new ProfessorDTO();
+
+        if(professor.isPresent()){
+            dto.setId(professor.get().getId());
+            dto.setFirstName(professor.get().getFirstName());
+            dto.setLastName(professor.get().getLastName());
+            dto.setCourseList(professor.get().getCourseList());
+        }
+        return dto;
     }
 
     @Override

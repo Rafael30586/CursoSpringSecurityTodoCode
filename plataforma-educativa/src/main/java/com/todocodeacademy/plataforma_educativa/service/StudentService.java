@@ -1,5 +1,6 @@
 package com.todocodeacademy.plataforma_educativa.service;
 
+import com.todocodeacademy.plataforma_educativa.dto.StudentDTO;
 import com.todocodeacademy.plataforma_educativa.model.Role;
 import com.todocodeacademy.plataforma_educativa.model.Student;
 import com.todocodeacademy.plataforma_educativa.model.UserSec;
@@ -8,10 +9,7 @@ import com.todocodeacademy.plataforma_educativa.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class StudentService implements IStudentService{
@@ -27,8 +25,40 @@ public class StudentService implements IStudentService{
     }
 
     @Override
+    public List<StudentDTO> findAllDTOs() {
+        List<Student> studentList = repository.findAll();
+        List<StudentDTO> dtoList = new ArrayList<>();
+        StudentDTO dto;
+
+        for(Student s : studentList){
+            dto = new StudentDTO();
+            dto.setId(s.getId());
+            dto.setFirstName(s.getFirstName());
+            dto.setLastName(s.getLastName());
+            dto.setCourseList(s.getCourseList());
+            dtoList.add(dto);
+        }
+
+        return dtoList;
+    }
+
+    @Override
     public Optional<Student> findById(Long id) {
         return repository.findById(id);
+    }
+
+    @Override
+    public StudentDTO findDTOById(Long id) {
+        Optional<Student> optional = repository.findById(id);
+        StudentDTO dto = new StudentDTO();
+
+        if(optional.isPresent()){
+            dto.setId(optional.get().getId());
+            dto.setFirstName(optional.get().getFirstName());
+            dto.setLastName(optional.get().getLastName());
+            dto.setCourseList(optional.get().getCourseList());
+        }
+        return dto;
     }
 
     @Override

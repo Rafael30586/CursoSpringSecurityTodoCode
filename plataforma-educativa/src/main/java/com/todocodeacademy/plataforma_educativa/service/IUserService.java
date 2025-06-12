@@ -1,5 +1,6 @@
 package com.todocodeacademy.plataforma_educativa.service;
 
+import com.todocodeacademy.plataforma_educativa.dto.StudentDTO;
 import com.todocodeacademy.plataforma_educativa.model.UserSec;
 
 import java.util.List;

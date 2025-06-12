@@ -31,7 +31,7 @@ public class PermissionController {
     public ResponseEntity getPermissionById(@PathVariable Long id) {
         Optional<Permission> permission = permissionService.findById(id);
         return permission.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
+}
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
