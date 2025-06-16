@@ -63,13 +63,23 @@ public class StudentController {
     @PatchMapping("/remove-course/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Student> removeCourse(@PathVariable Long id,
-                                                @RequestParam Long courseId){
+                                                @RequestParam("course-id") Long courseId){
         Student student = service.findById(id).get();
         List<Course> courseList = student.getCourseList();
+        Course courseToRemove = new Course();
+        boolean isCourse = false; // se vuelve true si el course que tenga el courseId está presente
 
         for(Course c : courseList){
-            if(courseId==c.getId()) courseList.remove(c);
+            //if(courseId==c.getId()) courseList.remove(c);
+            if(courseId == c.getId()) {
+                courseToRemove = c;
+                isCourse = true;
+            }
         }
+        if(isCourse){
+            courseList.remove(courseToRemove);
+        }
+
 
         student.setCourseList(courseList);
 
@@ -81,7 +91,7 @@ public class StudentController {
     @PatchMapping("/add-course/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Student> addCourse(@PathVariable Long id,
-                                             @RequestParam Long newCourseId){
+                                             @RequestParam("new-course-id") Long newCourseId){
         Student student = service.findById(id).get();
         List<Course> courseList = student.getCourseList();
         boolean isCourse = false; // Para indicar si el curso ya estaba dentro de la lista. Sólo agregar el nuevo curso si no estaba
@@ -91,14 +101,21 @@ public class StudentController {
             if(c.getName().equals(newCourse.getName())) isCourse = true;
         }
 
-        courseList.add(newCourse);
+        if(!isCourse) {
+            courseList.add(newCourse);
+            student.setCourseList(courseList);
+            service.update(student);
+        }
 
-        student.setCourseList(courseList);
-        service.save(student);
 
         return ResponseEntity.ok(service.findById(id).get());
     }
 
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void deleteById(@PathVariable Long id){
+        service.deleteById(id);
+    }
     //monica weiss usuario: moni contraseña: 12345678
 
 }

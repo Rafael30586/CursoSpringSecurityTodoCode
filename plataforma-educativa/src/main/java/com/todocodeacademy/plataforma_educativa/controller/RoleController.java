@@ -69,4 +69,6 @@ public class RoleController {
                           @RequestParam char accion){
         return roleService.patch(roleId,permissionId,accion);
     }
+
+
 }

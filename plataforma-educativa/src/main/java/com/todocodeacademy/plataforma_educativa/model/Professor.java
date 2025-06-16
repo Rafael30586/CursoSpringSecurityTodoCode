@@ -25,7 +25,7 @@ public class Professor {
     @Column(unique = true)
     private String username;
     private String password;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Course> courseList = new ArrayList<>();
 
     public Long getId() {

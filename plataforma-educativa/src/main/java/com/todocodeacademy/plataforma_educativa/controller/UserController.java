@@ -92,6 +92,12 @@ public class UserController {
         }
         return null;
     }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void deleteById(@PathVariable Long id){
+        userService.deleteById(id);
+    }
     //rafael, contraseña: 1234 ADMIN
     //pancho, contraseña: 1234 STUDENT
 }

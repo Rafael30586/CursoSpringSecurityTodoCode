@@ -91,4 +91,9 @@ public class ProfessorService implements IProfessorService{
     public Professor update(Professor professor) {
         return repository.save(professor);
     }
+
+    @Override
+    public Optional<Professor> findByUsername(String username) {
+        return repository.findByUsername(username);
+    }
 }

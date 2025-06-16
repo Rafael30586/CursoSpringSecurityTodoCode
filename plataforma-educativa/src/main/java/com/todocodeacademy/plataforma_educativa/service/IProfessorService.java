@@ -15,4 +15,5 @@ public interface IProfessorService {
     public Professor save(Professor professor);
     public void deleteById(Long id);
     public Professor update(Professor professor);
+    public Optional<Professor> findByUsername(String username);
 }

@@ -25,7 +25,7 @@ public class Student {
     @Column(unique = true)
     private String username;
     private String password;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Course> courseList = new ArrayList<>();
 
     public Long getId() {

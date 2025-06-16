@@ -21,10 +21,11 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    /*
     @ManyToOne
     private Professor professor;
-    @ManyToMany
-    private Set<Student> studentList = new HashSet<>();
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Student> studentList = new HashSet<>();*/
 
     public String getName() {
         return name;
@@ -42,19 +43,4 @@ public class Course {
         this.id = id;
     }
 
-    public Set<Student> getStudentList() {
-        return studentList;
-    }
-
-    public void setStudentList(Set<Student> studentList) {
-        this.studentList = studentList;
-    }
-
-    public Professor getProfessor() {
-        return professor;
-    }
-
-    public void setProfessor(Professor professor) {
-        this.professor = professor;
-    }
 }
