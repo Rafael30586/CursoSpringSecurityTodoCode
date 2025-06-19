@@ -1,13 +1,12 @@
-package com.todocodeacademy.LogisCode.controller;
+package com.todocodeacademy.logiscode2.controller;
 
-import com.todocodeacademy.LogisCode.model.Vehiculo;
-import com.todocodeacademy.LogisCode.service.IVehiculoService;
+import com.todocodeacademy.logiscode2.model.Vehiculo;
+import com.todocodeacademy.logiscode2.service.IVehiculoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/vehiculos")

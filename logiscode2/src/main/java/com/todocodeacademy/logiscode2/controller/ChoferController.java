@@ -1,7 +1,7 @@
-package com.todocodeacademy.LogisCode.controller;
+package com.todocodeacademy.logiscode2.controller;
 
-import com.todocodeacademy.LogisCode.model.Chofer;
-import com.todocodeacademy.LogisCode.service.IChoferService;
+import com.todocodeacademy.logiscode2.model.Chofer;
+import com.todocodeacademy.logiscode2.service.IChoferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

@@ -1,7 +1,7 @@
-package com.todocodeacademy.LogisCode.controller;
+package com.todocodeacademy.logiscode2.controller;
 
-import com.todocodeacademy.LogisCode.model.Viaje;
-import com.todocodeacademy.LogisCode.service.IViajeService;
+import com.todocodeacademy.logiscode2.model.Viaje;
+import com.todocodeacademy.logiscode2.service.IViajeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -11,7 +11,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/viajes")
-@PreAuthorize("denyAll()")
 public class ViajeController {
 
     @Autowired
