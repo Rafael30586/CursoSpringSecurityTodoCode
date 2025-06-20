@@ -13,5 +13,6 @@ public interface IRoleService {
     public void deleteById(Long id);
     public Role save(Role role);
     public Role update(Role role);
-    Role patch(Long roleId, Long permissionId, char accion);
+    public Role patch(Long roleId, Long permissionId, char accion);
+    public Optional<Role> findByRole(String role);
 }

@@ -1,7 +1,9 @@
 package com.todocodeacademy.blog_online.service;
 
 import com.todocodeacademy.blog_online.model.Author;
+import com.todocodeacademy.blog_online.model.UserSec;
 import com.todocodeacademy.blog_online.repository.IAuthorRepository;
+import com.todocodeacademy.blog_online.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ public class AuthorService implements IAuthorService{
 
     @Autowired
     private IAuthorRepository repository;
+    @Autowired
+    private IUserRepository userRepository;
 
     @Override
     public List<Author> findAll() {

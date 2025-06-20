@@ -19,7 +19,7 @@ import java.util.Set;
 public class UserController {
 
     @Autowired
-    private IUserService userService;
+    private IUserService service;
 
     @Autowired
     private IRoleService roleService;
@@ -28,14 +28,14 @@ public class UserController {
     @GetMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public ResponseEntity<List<UserSec>> getAllUsers() {
-        List users = userService.findAll();
+        List users = service.findAll();
         return ResponseEntity.ok(users);
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public ResponseEntity getUserById(@PathVariable Long id) {
-        Optional<UserSec> user = userService.findById(id);
+        Optional<UserSec> user = service.findById(id);
         return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
@@ -46,7 +46,7 @@ public class UserController {
         Set<Role> roleList = new HashSet<>();
         Role readRole;
 
-        userSec.setPassword(userService.encriptPassword(userSec.getPassword()));
+        userSec.setPassword(service.encriptPassword(userSec.getPassword()));
 
         // Recuperar la Permission/s por su ID
         for (Role role : userSec.getRoleList()){
@@ -60,7 +60,7 @@ public class UserController {
         if (!roleList.isEmpty()) {
             userSec.setRoleList(roleList);
 
-            UserSec newUser = userService.save(userSec);
+            UserSec newUser = service.save(userSec);
             return ResponseEntity.ok(newUser);
         }
         return null;

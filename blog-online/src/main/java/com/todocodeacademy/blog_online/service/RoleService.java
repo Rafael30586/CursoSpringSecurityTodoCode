@@ -66,4 +66,9 @@ public class RoleService implements IRoleService{
         return null;
     }
 
+    @Override
+    public Optional<Role> findByRole(String role) {
+        return repository.findByRole(role);
+    }
+
 }
