@@ -8,6 +8,7 @@ import com.todocodeacademy.blog_online.service.IRoleService;
 import com.todocodeacademy.blog_online.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,15 +31,18 @@ public class AuthorController {
     private IRoleService roleService;
 
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_USER','ROLE_AUTHOR')")
     public ResponseEntity<List<Author>> findAll(){
         return ResponseEntity.ok(service.findAll());
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_USER','ROLE_AUTHOR')")
     public ResponseEntity<Author> findById(@PathVariable Long id){
         return ResponseEntity.ok(service.findById(id).orElse(new Author(-99999L,null,null)));
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PostMapping //Hay que crear un usuario a partir de los datos del autor
     public ResponseEntity<Author> save(@RequestBody Author author){
         UserSec user = new UserSec();
